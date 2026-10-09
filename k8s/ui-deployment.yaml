@@ -1,0 +1,47 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: loan-rag-ui
+  namespace: loan-rag
+  labels:
+    app: loan-rag-ui
+spec:
+  replicas: 2                # the UI is stateless and light, so it can scale freely
+  selector:
+    matchLabels:
+      app: loan-rag-ui
+  template:
+    metadata:
+      labels:
+        app: loan-rag-ui
+    spec:
+      containers:
+        - name: ui
+          image: loan-rag-ui:latest
+          imagePullPolicy: IfNotPresent
+          ports:
+            - name: http
+              containerPort: 8501
+          env:
+            - name: API_URL
+              value: http://loan-rag-api:8000
+          resources:
+            requests:
+              cpu: 100m
+              memory: 256Mi
+            limits:
+              cpu: 500m
+              memory: 512Mi
+          readinessProbe:
+            httpGet:
+              path: /_stcore/health
+              port: http
+            periodSeconds: 10
+            failureThreshold: 3
+          livenessProbe:
+            httpGet:
+              path: /_stcore/health
+              port: http
+            initialDelaySeconds: 20
+            periodSeconds: 30
+            failureThreshold: 3

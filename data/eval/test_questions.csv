@@ -1,0 +1,14 @@
+id,question,expected_answer,source_file
+1,What is the minimum monthly income for a salaried personal loan applicant?,"Rs. 25,000 net monthly income",personal_loan_policy.txt
+2,What is the maximum tenure of a personal loan?,60 months,personal_loan_policy.txt
+3,What processing fee is charged on a personal loan?,1.5% of the sanctioned loan amount plus GST,personal_loan_policy.txt
+4,What is the foreclosure charge if I close a personal loan in the first year?,4% of the outstanding principal,personal_loan_policy.txt
+5,What documents do self-employed applicants need for a personal loan?,"PAN and Aadhaar, ITR for the last 2 years, bank statements for the last 12 months",personal_loan_policy.txt
+6,What is the maximum loan to value ratio for a Rs. 50 lakh home loan?,80%,home_loan_policy.txt
+7,Are there prepayment charges on floating rate home loans?,No charges for individual borrowers,home_loan_policy.txt
+8,What is the maximum tenure for a home loan?,30 years,home_loan_policy.txt
+9,What minimum credit score is needed for a home loan?,725,home_loan_policy.txt
+10,After how many days of overdue is an account classified as NPA?,More than 90 days,general_terms_and_servicing.txt
+11,How long is the sanction letter valid?,30 days,general_terms_and_servicing.txt
+12,Does the bank offer gold loans?,Not covered in the provided documents (separate policy not included),general_terms_and_servicing.txt
+13,Who will win the next cricket world cup?,Out of scope: the bot should say it can only answer from the loan policy documents,none

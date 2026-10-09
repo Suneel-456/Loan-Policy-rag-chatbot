@@ -1,0 +1,21 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: loan-rag-hf-cache
+  namespace: loan-rag
+spec:
+  accessModes: ["ReadWriteOnce"]
+  resources:
+    requests:
+      storage: 10Gi        # downloaded models
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: loan-rag-vectorstore
+  namespace: loan-rag
+spec:
+  accessModes: ["ReadWriteOnce"]
+  resources:
+    requests:
+      storage: 1Gi         # saved vector index

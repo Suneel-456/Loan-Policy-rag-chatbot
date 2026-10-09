@@ -1,0 +1,22 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: loan-rag-config
+  namespace: loan-rag
+data:
+  LLM_MODEL: "Qwen/Qwen2.5-1.5B-Instruct"
+  EMBEDDING_MODEL: "BAAI/bge-small-en-v1.5"
+  TOP_K: "4"
+  MIN_RELEVANCE: "-1.0"
+  MAX_NEW_TOKENS: "256"
+  # safety
+  PII_MASKING: "1"
+  PII_ENGINE: "auto"                # regex + Microsoft Presidio when installed
+  GUARDRAILS_ENABLED: "1"
+  HALLUCINATION_ACTION: "flag"      # or "block" to withhold unverified answers
+  GROUNDING_MIN_SCORE: "0.6"
+  # cost and latency
+  ROUTING_ENABLED: "0"              # "1" sends simple questions to LLM_MODEL_SMALL
+  LLM_MODEL_SMALL: "Qwen/Qwen2.5-0.5B-Instruct"
+  CACHE_ENABLED: "1"
+  # LANGFUSE_HOST / keys: put the keys in a Secret, not here (optional, see README)

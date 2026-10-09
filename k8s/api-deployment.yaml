@@ -1,0 +1,78 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: loan-rag-api
+  namespace: loan-rag
+  labels:
+    app: loan-rag-api
+spec:
+  replicas: 1                # one replica: the models are memory heavy and the volumes are ReadWriteOnce
+  strategy:
+    type: Recreate           # never run two pods against the same ReadWriteOnce volumes
+  selector:
+    matchLabels:
+      app: loan-rag-api
+  template:
+    metadata:
+      labels:
+        app: loan-rag-api
+    spec:
+      securityContext:
+        runAsUser: 1000
+        runAsGroup: 1000
+        fsGroup: 1000
+      containers:
+        - name: api
+          image: loan-rag-api:latest
+          imagePullPolicy: IfNotPresent
+          ports:
+            - name: http
+              containerPort: 8000
+          envFrom:
+            - configMapRef:
+                name: loan-rag-config
+          env:
+            - name: HF_HOME
+              value: /models/hf
+            - name: VECTORSTORE_PATH
+              value: /app/vectorstore/index.json
+          resources:
+            requests:
+              cpu: "1"
+              memory: 6Gi
+            limits:
+              cpu: "4"
+              memory: 10Gi
+          volumeMounts:
+            - name: hf-cache
+              mountPath: /models/hf
+            - name: vectorstore
+              mountPath: /app/vectorstore
+          # The first start downloads the models (several GB), so allow up to 15 minutes.
+          startupProbe:
+            httpGet:
+              path: /health
+              port: http
+            periodSeconds: 10
+            failureThreshold: 90
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: http
+            periodSeconds: 10
+            timeoutSeconds: 10
+            failureThreshold: 3
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: http
+            periodSeconds: 30
+            timeoutSeconds: 10
+            failureThreshold: 5
+      volumes:
+        - name: hf-cache
+          persistentVolumeClaim:
+            claimName: loan-rag-hf-cache
+        - name: vectorstore
+          persistentVolumeClaim:
+            claimName: loan-rag-vectorstore

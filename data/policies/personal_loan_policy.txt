@@ -1,0 +1,38 @@
+SAMPLE BANK - PERSONAL LOAN POLICY
+Version 1.0 | Sample document for a RAG project demo. Sample Bank is a fictional institution.
+
+Section 1. Eligibility
+1.1 Salaried applicants must be between 21 and 58 years of age at the time of application.
+1.2 Salaried applicants must have a minimum net monthly income of Rs. 25,000.
+1.3 Salaried applicants must have at least 1 year of total work experience, including at least 6 months with the current employer.
+1.4 Self-employed applicants must have a minimum business vintage of 2 years and must submit Income Tax Returns for the last 2 years.
+1.5 The minimum credit score required is 700. Applications with a credit score below 700 are declined.
+
+Section 2. Loan Amount and Tenure
+2.1 The minimum loan amount is Rs. 50,000 and the maximum loan amount is Rs. 25,00,000.
+2.2 The loan tenure ranges from 12 months to 60 months.
+2.3 The total EMI obligations of the applicant, including the new loan, must not exceed 50% of the net monthly income.
+
+Section 3. Interest Rate and Fees
+3.1 Personal loans carry a fixed interest rate. The rate depends on the credit score of the applicant.
+3.2 Credit score of 780 and above: 10.5% to 11.5% per annum.
+3.3 Credit score of 700 to 779: 11.5% to 15% per annum.
+3.4 A processing fee of 1.5% of the sanctioned loan amount plus GST is charged at the time of disbursal.
+3.5 Stamp duty is charged as applicable in the state of the borrower.
+
+Section 4. Documents Required
+4.1 Identity and address proof: PAN card and Aadhaar for all applicants.
+4.2 Income proof for salaried applicants: salary slips for the last 3 months and bank statements for the last 6 months.
+4.3 Income proof for self-employed applicants: Income Tax Returns with computation of income for the last 2 years and bank statements for the last 12 months.
+4.4 Employment proof for salaried applicants: employee ID card or offer letter.
+
+Section 5. Repayment, Late Payment and EMI Bounce
+5.1 The EMI is auto-debited on the due date through a NACH mandate.
+5.2 An EMI bounce charge of Rs. 500 plus GST is levied for each bounced instalment.
+5.3 Penal charges of 2% per month are levied on the overdue amount for delayed payment.
+5.4 Repeated EMI bounces and delayed payments are reported to credit bureaus and affect the borrower's credit score.
+
+Section 6. Prepayment and Foreclosure
+6.1 Part prepayment is allowed after 6 EMIs have been paid. The minimum part prepayment amount is equal to 3 EMIs.
+6.2 Foreclosure within the first 12 months of the loan attracts a charge of 4% of the outstanding principal.
+6.3 Foreclosure after 12 months from disbursal attracts a charge of 2% of the outstanding principal.

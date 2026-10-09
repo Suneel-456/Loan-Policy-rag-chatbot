@@ -1,0 +1,59 @@
+services:
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        WITH_LANGFUSE: ${WITH_LANGFUSE:-0}
+    image: loan-rag-api:latest
+    environment:
+      LLM_MODEL: ${LLM_MODEL:-Qwen/Qwen2.5-1.5B-Instruct}
+      EMBEDDING_MODEL: ${EMBEDDING_MODEL:-BAAI/bge-small-en-v1.5}
+      TOP_K: ${TOP_K:-4}
+      MIN_RELEVANCE: ${MIN_RELEVANCE:--1.0}
+      MAX_NEW_TOKENS: ${MAX_NEW_TOKENS:-256}
+      # safety
+      PII_MASKING: ${PII_MASKING:-1}
+      PII_ENGINE: ${PII_ENGINE:-auto}
+      GUARDRAILS_ENABLED: ${GUARDRAILS_ENABLED:-1}
+      HALLUCINATION_ACTION: ${HALLUCINATION_ACTION:-flag}
+      GROUNDING_MIN_SCORE: ${GROUNDING_MIN_SCORE:-0.6}
+      # cost and latency
+      ROUTING_ENABLED: ${ROUTING_ENABLED:-0}
+      LLM_MODEL_SMALL: ${LLM_MODEL_SMALL:-Qwen/Qwen2.5-0.5B-Instruct}
+      CACHE_ENABLED: ${CACHE_ENABLED:-1}
+      TORCH_THREADS: ${TORCH_THREADS:-0}
+      # optional self-hosted Langfuse (needs WITH_LANGFUSE=1 at build time)
+      LANGFUSE_HOST: ${LANGFUSE_HOST:-}
+      LANGFUSE_PUBLIC_KEY: ${LANGFUSE_PUBLIC_KEY:-}
+      LANGFUSE_SECRET_KEY: ${LANGFUSE_SECRET_KEY:-}
+    ports:
+      - "8000:8000"
+    volumes:
+      - hf_cache:/models/hf          # downloaded models, reused between restarts
+      - vectorstore:/app/vectorstore # saved index
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/health', timeout=5)"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 600s
+    restart: unless-stopped
+
+  ui:
+    build:
+      context: .
+      dockerfile: Dockerfile.ui
+    image: loan-rag-ui:latest
+    environment:
+      API_URL: http://api:8000
+    ports:
+      - "8501:8501"
+    depends_on:
+      api:
+        condition: service_healthy
+    restart: unless-stopped
+
+volumes:
+  hf_cache:
+  vectorstore:
